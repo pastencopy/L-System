@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ *  L-System
+ * 
+ * 
+ *   Coded by 2020-02-14 GwangSu Lee
+ * 
+ * Turtle Graphics : https://en.wikipedia.org/wiki/Turtle_graphics
+ * L-System Rerefence : https://en.wikipedia.org/wiki/L-system
+ * 
+ * */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,7 +23,10 @@ namespace L_System
 {
     public partial class Form1 : Form
     {
-        FractalBinaryTree tree = new FractalBinaryTree();
+        FractalBinaryTree fractalBinaryTree = new FractalBinaryTree();
+        FractalPlant fractalPlant = new FractalPlant();
+        DragonCurve dragonCurve = new DragonCurve();
+
         Bitmap drawImage;
 
         public Form1()
@@ -29,7 +42,7 @@ namespace L_System
 
         private void btnFractalBinaryTree_Click(object sender, EventArgs e)
         {
-            if (tree.ageOfTree >= 8)
+            if (fractalBinaryTree.ageOfTree >= 8)
             {
                 MessageBox.Show("이미 최대값으로 그렸습니다.");
                 return;
@@ -37,12 +50,12 @@ namespace L_System
 
             Graphics.FromImage(drawImage).Clear(Color.White);
 
-            tree.Grow();
-            tree.Draw(Graphics.FromImage(drawImage),picCanvas.Width / 2,picCanvas.Height);
+            fractalBinaryTree.Grow();
+            fractalBinaryTree.Draw(Graphics.FromImage(drawImage),picCanvas.Width / 2,picCanvas.Height);
 
             picCanvas.CreateGraphics().DrawImageUnscaled(drawImage, 0, 0);
 
-            this.Text = string.Format("{0} 세대 트리 / (MAX:8세대)", tree.ageOfTree);
+            this.Text = string.Format("{0} 세대 FractalBinaryTree / (MAX:8세대)", fractalBinaryTree.ageOfTree);
 
         }
 
@@ -50,7 +63,9 @@ namespace L_System
         {
             Graphics.FromImage(drawImage).Clear(Color.White);
 
-            tree = new FractalBinaryTree();
+            fractalBinaryTree = new FractalBinaryTree();
+            fractalPlant = new FractalPlant();
+            dragonCurve = new DragonCurve();
 
             picCanvas.CreateGraphics().DrawImageUnscaled(drawImage, 0, 0);
         }
@@ -58,6 +73,42 @@ namespace L_System
         private void picCanvas_Paint(object sender, PaintEventArgs e)
         {
             picCanvas.CreateGraphics().DrawImageUnscaled(drawImage, 0, 0);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (fractalPlant.ageOfTree >= 7)
+            {
+                MessageBox.Show("이미 최대값으로 그렸습니다.");
+                return;
+            }
+
+            Graphics.FromImage(drawImage).Clear(Color.White);
+
+            fractalPlant.Grow();
+            fractalPlant.Draw(Graphics.FromImage(drawImage), 50, picCanvas.Height);
+
+            picCanvas.CreateGraphics().DrawImageUnscaled(drawImage, 0, 0);
+
+            this.Text = string.Format("{0} 세대 FractalPlant / (MAX:7세대)", fractalPlant.ageOfTree);
+        }
+
+        private void btnDragonCurve_Click(object sender, EventArgs e)
+        {
+            if (dragonCurve.ageOfTree >= 10)
+            {
+                MessageBox.Show("이미 최대값으로 그렸습니다.");
+                return;
+            }
+
+            Graphics.FromImage(drawImage).Clear(Color.White);
+
+            dragonCurve.Grow();
+            dragonCurve.Draw(Graphics.FromImage(drawImage), picCanvas.Width/2, picCanvas.Height/2);
+
+            picCanvas.CreateGraphics().DrawImageUnscaled(drawImage, 0, 0);
+
+            this.Text = string.Format("{0} 세대 DragonCurve / (MAX:10세대)", dragonCurve.ageOfTree);
         }
     }
 }
